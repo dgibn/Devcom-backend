@@ -4,4 +4,5 @@ class bookings(models.Model):
     Venue=models.CharField(max_length=1,default="NULL")
     Room=models.CharField(max_length=6,default="Null")
     Date=models.CharField(max_length=10,default="01-01-0001")
-    Time=models.IntegerField(default=0000)
+    Starttime=models.IntegerField(default=0000)
+    endtime=models.IntegerField(default=0000)

@@ -6,19 +6,31 @@ from .serializers import ItemSerializer
 @api_view(["POST"])
 def add(request):
     serializer=ItemSerializer(data=request.data)
+    j=1
     if serializer.is_valid():
+        vd=serializer.validated_data
+        details=bookings.objects.values().filter(Date=vd.get("Date"),Venue=vd.get("Venue"),Room=vd.get("Room"))
+        for i in range(0,len(details)):
+            if ((vd.get("Starttime")>details[i]["Starttime"] and vd.get("endtime")<details[i]["endtime"]) or (vd.get("Starttime")<details[i]["Starttime"] and vd.get("endtime")<details[i]["endtime"]) or (vd.get("Starttime")<details[i]["endtime"] and vd.get("endtime")>details[i]["endtime"])):
+                j=0
+    if j==1:
         serializer.save()
-    return Response(serializer.data)
+        return Response("Booking confirmed")
+    else:
+        return Response("Already booked")
+
+    
 @api_view(["GET"])
 def existing(request):
-    book=bookings.objects.all().filter(Date__startswith="20")
+    book=bookings.objects.all().values()
     serializers=ItemSerializer(book,many=True)
     return Response(serializers.data)
 @api_view(["DELETE"])
-def cancel(self,request,EventName,Date,Time,format=None):
-    details=bookings.objects.filter(EventName=EventName,Date=Date,Time=Time)
-    if details:
-        details.delete()
-        return JsonResponse({"status":"ok"},status=status.HTTP_200_OK)
-    return JsonResponse(ItemSerializer.errors,status=status.HTTP_400_BAD_REQUEST)
+def cancel(request):
+    serializer=ItemSerializer(data=request.data)
+    details=bookings.objects.all().filter()
+    if serializer:
+        serializer.save()
+    return Response(serializer.data)
+    
     
