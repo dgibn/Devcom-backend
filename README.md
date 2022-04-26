@@ -1,5 +1,5 @@
 # Devcom-backend
-The main project is named LHC__
+The main project is named LHC <br>
 The app name is mainapp__
 The folder api consists of all the endpints api's created including the serializers as well as the urls and endpoints__
 The database model where the data is stored is named "Bookings".__
