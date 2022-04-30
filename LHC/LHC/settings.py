@@ -70,7 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'LHC.wsgi.application'
-
+REST_FRAMEWORK={"DATE_INPUT_FORMATS":["%d-%m-%Y"]}
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
