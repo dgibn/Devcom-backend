@@ -27,10 +27,11 @@ def existing(request):
     return Response(serializers.data)
 @api_view(["DELETE"])
 def cancel(request):
-    serializer=ItemSerializer(data=request.data)
-    details=bookings.objects.all().filter()
-    if serializer:
-        serializer.save()
-    return Response(serializer.data)
+    details=bookings.objects.get(id=1)
+    if details:
+        details.delete()
+        return Response("Deleted")
+    else:
+        return Response("No existing booking")
     
     
