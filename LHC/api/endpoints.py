@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from mainapp.models import bookings
 from .serializers import ItemSerializer
+import random
 @api_view(["POST"])
 def add(request):
     serializer=ItemSerializer(data=request.data)
@@ -19,7 +20,7 @@ def add(request):
     else:
         return Response("Already booked")
 
-    
+  
 @api_view(["GET"])
 def existing(request):
     book=bookings.objects.all().values()
@@ -27,11 +28,15 @@ def existing(request):
     return Response(serializers.data)
 @api_view(["DELETE"])
 def cancel(request):
-    details=bookings.objects.get(id=1)
-    if details:
-        details.delete()
-        return Response("Deleted")
-    else:
-        return Response("No existing booking")
+    book=bookings.objects.values()
+    l=len(book)
+    if (l>0):
+        details=bookings.objects.get(id=random.randrange(1,l))
+        if details:
+            details.delete()
+            return Response("Deleted")
+        else:
+            return Response("No existing booking")
+    return Response("No bookings")
     
     
